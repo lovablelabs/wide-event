@@ -2,7 +2,7 @@
 
 [![Crates.io](https://img.shields.io/crates/v/wide-event.svg)](https://crates.io/crates/wide-event)
 [![docs.rs](https://docs.rs/wide-event/badge.svg)](https://docs.rs/wide-event)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE-MIT)
+[![License](https://img.shields.io/crates/l/wide-event.svg)](LICENSE-MIT)
 
 Honeycomb-style wide events for Rust.
 
@@ -94,4 +94,9 @@ Requires [`cargo-release`](https://crates.io/crates/cargo-release):
 
 ## License
 
-MIT — see [LICENSE-MIT](LICENSE-MIT).
+Licensed under either of
+
+- [MIT license](LICENSE-MIT)
+- [Apache License, Version 2.0](LICENSE-APACHE)
+
+at your option.
