@@ -1,0 +1,33 @@
+[package]
+name = "wide-event"
+version = "0.1.0"
+edition = "2021"
+description = "Honeycomb-style wide events — accumulate structured fields throughout a request lifecycle and emit as a single JSON line via tracing"
+license = "MIT"
+repository = "https://github.com/lovablelabs/wide-event"
+keywords = ["tracing", "observability", "wide-event", "structured-logging", "honeycomb"]
+categories = ["development-tools::debugging", "development-tools::profiling"]
+
+[features]
+default = []
+opentelemetry = ["dep:opentelemetry", "dep:tracing-opentelemetry"]
+tokio = ["dep:tokio"]
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", default-features = false, features = ["registry", "fmt"] }
+
+opentelemetry = { version = "0.31", default-features = false, features = ["trace"], optional = true }
+tracing-opentelemetry = { version = "0.32", optional = true }
+tokio = { version = "1", features = ["rt"], optional = true }
+
+[dev-dependencies]
+criterion = { version = "0.5", features = ["html_reports"] }
+tracing-subscriber = { version = "0.3", features = ["registry", "fmt", "env-filter"] }
+tokio = { version = "1", features = ["rt", "macros"] }
+
+[[bench]]
+name = "wide_event"
+harness = false
