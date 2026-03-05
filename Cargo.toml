@@ -24,7 +24,7 @@ tracing-opentelemetry = { version = "0.32", optional = true }
 tokio = { version = "1", features = ["rt"], optional = true }
 
 [dev-dependencies]
-criterion = { version = "0.5", features = ["html_reports"] }
+criterion = { version = "0.8", features = ["html_reports"] }
 tracing-subscriber = { version = "0.3", features = ["registry", "fmt", "env-filter"] }
 tokio = { version = "1", features = ["rt", "macros"] }
 
