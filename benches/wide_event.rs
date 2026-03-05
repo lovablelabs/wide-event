@@ -7,7 +7,9 @@
 use std::io::Write;
 use std::sync::{Arc, Mutex};
 
-use criterion::{black_box, criterion_group, criterion_main, Criterion};
+use std::hint::black_box;
+
+use criterion::{criterion_group, criterion_main, Criterion};
 use tracing::dispatcher::Dispatch;
 use tracing_subscriber::prelude::*;
 use wide_event::{JsonFormatter, LogfmtFormatter, WideEvent, WideEventLayer};
