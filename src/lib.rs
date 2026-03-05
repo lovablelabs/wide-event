@@ -103,43 +103,11 @@ thread_local! {
 pub struct Rfc3339;
 
 impl FormatTime for Rfc3339 {
-    #[allow(
-        clippy::many_single_char_names,
-        clippy::cast_possible_truncation,
-        clippy::cast_possible_wrap,
-        clippy::cast_sign_loss,
-        reason = "variable names match the Howard Hinnant civil date algorithm; casts are safe by algorithm invariants"
-    )]
     fn format_time(&self, w: &mut Writer<'_>) -> std::fmt::Result {
-        let now = std::time::SystemTime::now();
-        let dur = now
-            .duration_since(std::time::UNIX_EPOCH)
-            .unwrap_or_default();
-        let secs = dur.as_secs();
-        let micros = dur.subsec_micros();
-
-        // Convert epoch seconds to date/time components
-        let days = (secs / 86400) as i64;
-        let time_of_day = secs % 86400;
-        let hours = time_of_day / 3600;
-        let minutes = (time_of_day % 3600) / 60;
-        let seconds = time_of_day % 60;
-
-        // Civil date from days since epoch (algorithm from Howard Hinnant)
-        let z = days + 719_468;
-        let era = (if z >= 0 { z } else { z - 146_096 }) / 146_097;
-        let doe = (z - era * 146_097) as u64;
-        let yoe = (doe - doe / 1460 + doe / 36524 - doe / 146_096) / 365;
-        let y = yoe as i64 + era * 400;
-        let doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
-        let mp = (5 * doy + 2) / 153;
-        let d = doy - (153 * mp + 2) / 5 + 1;
-        let m = if mp < 10 { mp + 3 } else { mp - 9 };
-        let y = if m <= 2 { y + 1 } else { y };
-
         write!(
             w,
-            "{y:04}-{m:02}-{d:02}T{hours:02}:{minutes:02}:{seconds:02}.{micros:06}Z",
+            "{}",
+            humantime::format_rfc3339_micros(std::time::SystemTime::now())
         )
     }
 }
