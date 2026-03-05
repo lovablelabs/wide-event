@@ -1,4 +1,8 @@
-#![allow(clippy::cast_sign_loss, clippy::cast_lossless, reason = "benchmark code with trivially safe casts")]
+#![allow(
+    clippy::cast_sign_loss,
+    clippy::cast_lossless,
+    reason = "benchmark code with trivially safe casts"
+)]
 
 use std::io::Write;
 use std::sync::{Arc, Mutex};

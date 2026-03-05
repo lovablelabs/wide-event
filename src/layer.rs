@@ -253,8 +253,7 @@ mod tests {
             evt.emit();
         });
 
-        let logfmt =
-            String::from_utf8(buf.lock().unwrap().clone()).unwrap();
+        let logfmt = String::from_utf8(buf.lock().unwrap().clone()).unwrap();
         assert!(logfmt.contains("subsystem=http"));
         assert!(logfmt.contains("method=GET"));
     }

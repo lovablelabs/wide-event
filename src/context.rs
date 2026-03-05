@@ -50,10 +50,7 @@ pub async fn scope<F: std::future::Future>(subsystem: &'static str, f: F) -> F::
 ///
 /// The event is emitted automatically when the future completes.
 /// If `emit()` was already called on the event, the auto-emit is a no-op.
-pub async fn scope_with<F: std::future::Future>(
-    event: Arc<WideEvent>,
-    f: F,
-) -> F::Output {
+pub async fn scope_with<F: std::future::Future>(event: Arc<WideEvent>, f: F) -> F::Output {
     let emit_ref = event.clone();
     let result = CURRENT.scope(event, f).await;
     emit_ref.emit();

@@ -103,14 +103,14 @@ thread_local! {
 pub struct Rfc3339;
 
 impl FormatTime for Rfc3339 {
-#[allow(
-    clippy::many_single_char_names,
-    clippy::cast_possible_truncation,
-    clippy::cast_possible_wrap,
-    clippy::cast_sign_loss,
-    reason = "variable names match the Howard Hinnant civil date algorithm; casts are safe by algorithm invariants"
-)]
-fn format_time(&self, w: &mut Writer<'_>) -> std::fmt::Result {
+    #[allow(
+        clippy::many_single_char_names,
+        clippy::cast_possible_truncation,
+        clippy::cast_possible_wrap,
+        clippy::cast_sign_loss,
+        reason = "variable names match the Howard Hinnant civil date algorithm; casts are safe by algorithm invariants"
+    )]
+    fn format_time(&self, w: &mut Writer<'_>) -> std::fmt::Result {
         let now = std::time::SystemTime::now();
         let dur = now
             .duration_since(std::time::UNIX_EPOCH)
@@ -185,7 +185,10 @@ impl std::fmt::Debug for WideEvent {
     }
 }
 
-#[allow(clippy::missing_panics_doc, reason = "all panics are from Mutex::lock which only panics if poisoned")]
+#[allow(
+    clippy::missing_panics_doc,
+    reason = "all panics are from Mutex::lock which only panics if poisoned"
+)]
 impl WideEvent {
     /// Create a new wide event for the given subsystem.
     ///
@@ -254,8 +257,7 @@ impl WideEvent {
     pub fn set_f64(&self, key: &'static str, val: f64) {
         self.inner.lock().unwrap().fields.insert(
             key,
-            serde_json::Number::from_f64(val)
-                .map_or(Value::Null, Value::Number),
+            serde_json::Number::from_f64(val).map_or(Value::Null, Value::Number),
         );
     }
 
@@ -270,20 +272,13 @@ impl WideEvent {
 
     /// Set a field from a raw [`serde_json::Value`].
     pub fn set_value(&self, key: &'static str, val: Value) {
-        self.inner
-            .lock()
-            .unwrap()
-            .fields
-            .insert(key, val);
+        self.inner.lock().unwrap().fields.insert(key, val);
     }
 
     /// Increment an integer counter field by 1 (initialized to 1 if absent).
     pub fn incr(&self, key: &'static str) {
         let mut inner = self.inner.lock().unwrap();
-        let entry = inner
-            .fields
-            .entry(key)
-            .or_insert(Value::Number(0.into()));
+        let entry = inner.fields.entry(key).or_insert(Value::Number(0.into()));
         if let Some(n) = entry.as_i64() {
             *entry = Value::Number((n + 1).into());
         }
@@ -325,7 +320,10 @@ impl WideEvent {
         });
     }
 
-    #[allow(clippy::items_after_statements, reason = "cfg-gated inner fn for conditional compilation is idiomatic")]
+    #[allow(
+        clippy::items_after_statements,
+        reason = "cfg-gated inner fn for conditional compilation is idiomatic"
+    )]
     fn finalize(&self) -> Option<WideEventRecord> {
         let mut inner = self.inner.lock().unwrap();
         if inner.emitted {
@@ -336,7 +334,10 @@ impl WideEvent {
         let duration = inner.start.elapsed();
 
         // Insert duration into fields so emit hooks can access it
-        #[allow(clippy::cast_possible_truncation, reason = "duration_ns fits in u64 for any practical duration")]
+        #[allow(
+            clippy::cast_possible_truncation,
+            reason = "duration_ns fits in u64 for any practical duration"
+        )]
         inner.fields.insert(
             "duration_ns",
             Value::Number((duration.as_nanos() as u64).into()),
@@ -364,8 +365,8 @@ impl WideEvent {
             let sc = cx.span().span_context().clone();
             if sc.is_valid() {
                 (
-                    Some(format!("{:032x}", sc.trace_id())),  // TraceId has no Display impl with padding
-                    Some(format!("{:016x}", sc.span_id())),  // SpanId has no Display impl with padding
+                    Some(format!("{:032x}", sc.trace_id())), // TraceId has no Display impl with padding
+                    Some(format!("{:016x}", sc.span_id())), // SpanId has no Display impl with padding
                 )
             } else {
                 (None, None)
@@ -508,9 +509,7 @@ mod tests {
     #[test]
     fn rfc3339_timer() {
         let mut buf = String::new();
-        Rfc3339
-            .format_time(&mut Writer::new(&mut buf))
-            .unwrap();
+        Rfc3339.format_time(&mut Writer::new(&mut buf)).unwrap();
         assert!(buf.contains('T'));
         assert!(buf.ends_with('Z'));
     }

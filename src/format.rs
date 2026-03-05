@@ -61,7 +61,10 @@ impl WideEventFormatter for JsonFormatter {
             system,
             subsystem: record.subsystem,
             timestamp,
-            #[allow(clippy::cast_precision_loss, reason = "acceptable for duration display")]
+            #[allow(
+                clippy::cast_precision_loss,
+                reason = "acceptable for duration display"
+            )]
             duration_ns: record.duration.as_nanos() as f64,
             trace_id: &record.trace_id,
             span_id: &record.span_id,
@@ -105,7 +108,10 @@ impl WideEventFormatter for LogfmtFormatter {
         }
         pair(w, "subsystem", record.subsystem)?;
         pair(w, "timestamp", timestamp)?;
-        #[allow(clippy::cast_precision_loss, reason = "acceptable for duration display")]
+        #[allow(
+            clippy::cast_precision_loss,
+            reason = "acceptable for duration display"
+        )]
         let duration_ns = record.duration.as_nanos() as f64;
         pair(w, "duration_ns", &duration_ns.to_string())?;
 
@@ -153,7 +159,12 @@ mod tests {
     fn json_basic() {
         let mut buf = Vec::new();
         JsonFormatter
-            .write_record(&mut buf, Some("myapp"), "2024-01-15T14:30:00Z", &test_record())
+            .write_record(
+                &mut buf,
+                Some("myapp"),
+                "2024-01-15T14:30:00Z",
+                &test_record(),
+            )
             .unwrap();
 
         let parsed: serde_json::Value = serde_json::from_slice(&buf).unwrap();
@@ -196,7 +207,12 @@ mod tests {
     fn logfmt_basic() {
         let mut buf = Vec::new();
         LogfmtFormatter
-            .write_record(&mut buf, Some("myapp"), "2024-01-15T14:30:00Z", &test_record())
+            .write_record(
+                &mut buf,
+                Some("myapp"),
+                "2024-01-15T14:30:00Z",
+                &test_record(),
+            )
             .unwrap();
 
         let output = String::from_utf8(buf).unwrap();
