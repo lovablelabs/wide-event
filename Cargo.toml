@@ -21,7 +21,7 @@ tracing = "0.1"
 tracing-subscriber = { version = "0.3", default-features = false, features = ["registry", "fmt"] }
 
 opentelemetry = { version = "0.31", default-features = false, features = ["trace"], optional = true }
-tracing-opentelemetry = { version = "0.32", optional = true }
+tracing-opentelemetry = { version = "0.33", optional = true }
 tokio = { version = "1", features = ["rt"], optional = true }
 
 [dev-dependencies]
