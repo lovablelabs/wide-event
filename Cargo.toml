@@ -1,6 +1,6 @@
 [package]
 name = "wide-event"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 description = "Honeycomb-style wide events — accumulate structured fields throughout a request lifecycle and emit as a single JSON line via tracing"
 license = "MIT OR Apache-2.0"
@@ -20,8 +20,8 @@ serde_json = "1.0"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", default-features = false, features = ["registry", "fmt"] }
 
-opentelemetry = { version = "0.31", default-features = false, features = ["trace"], optional = true }
-tracing-opentelemetry = { version = "0.32", optional = true }
+opentelemetry = { version = "0.33", default-features = false, features = ["trace"], optional = true }
+tracing-opentelemetry = { version = "0.34", optional = true }
 tokio = { version = "1", features = ["rt"], optional = true }
 
 [dev-dependencies]

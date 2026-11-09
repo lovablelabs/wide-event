@@ -102,7 +102,7 @@ the `tracing::info!` dispatch on the same thread.
 
 ```toml
 [dependencies]
-wide-event = { version = "0.1", features = ["tokio"] }
+wide-event = { version = "0.2", features = ["tokio"] }
 ```
 
 ## Formatters

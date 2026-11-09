@@ -148,7 +148,7 @@ mod tests {
 
         WideEventRecord {
             subsystem: "http",
-            duration: std::time::Duration::from_nanos(1_500_000),
+            duration: std::time::Duration::from_micros(1_500),
             fields,
             trace_id: None,
             span_id: None,
